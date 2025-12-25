@@ -7,7 +7,7 @@ app = Flask(__name__)
 app.secret_key = secrets.token_hex(32)
 
 USER = "admin"
-PASSWORD_HASH = generate_password_hash("JtNk-61721113")  # Contraseña segura
+PASSWORD_HASH = generate_password_hash("contraseña")  # Contraseña segura
 
 login_attempts = {}
 LOCK_TIME = 300  # 5 minutos
