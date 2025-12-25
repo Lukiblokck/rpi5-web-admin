@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPi 5 Panel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="dashboard">
+
+        <!-- Header -->
+        <header class="dashboard-header">
+            <h1>RPi 5 Panel</h1>
+            <p>Control total de tus bots y tu Raspberry Pi</p>
+        </header>
+
+        <!-- Contenedor principal: Bots + Info -->
+        <div class="dashboard-main">
+
+            <!-- Sección Bots -->
+            <section class="dashboard-section bots-section">
+                <h2>Bots</h2>
+                <div class="cards-grid">
+                    {% for bot in bots %}
+                    <div class="card bot-card">
+                        <h3>{{ bot.name }}</h3>
+                        <p>Estado: <span class="status {{ bot.status }}">{{ bot.status | capitalize }}</span></p>
+                        <a href="{{ bot.uptime }}" target="_blank" class="button">Uptime</a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <!-- Sección Raspberry Pi -->
+            <section class="dashboard-section rpi-section">
+                <h2>Raspberry Pi</h2>
+                <div class="cards-grid">
+                    <div class="card rpi-card">
+                        <p><strong>CPU:</strong> {{ rpi_info.CPU }}</p>
+                        <p><strong>RAM:</strong> {{ rpi_info.RAM }}</p>
+                        <p><strong>DISCO:</strong> {{ rpi_info.DISCO }}</p>
+                        <p><strong>IP:</strong> {{ rpi_info.IP }}</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Logout -->
+        <footer class="dashboard-footer">
+            <a href="{{ url_for('logout') }}" class="logout-btn">Cerrar sesión</a>
+        </footer>
+    </div>
+</body>
+</html>

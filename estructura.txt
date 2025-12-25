@@ -1,0 +1,9 @@
+RPi5Panel/
+│
+├─ app.py
+├─ bots.json         # Lista de bots y enlaces
+├─ templates/
+│   ├─ login.html
+│   └─ dashboard.html
+├─ static/
+│   ├─ style.css

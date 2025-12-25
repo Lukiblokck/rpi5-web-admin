@@ -1,0 +1,196 @@
+/* --- Global --- */
+body {
+    font-family: 'Orbitron', sans-serif;
+    background-color: #0a0a0a;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Dashboard contenedor */
+.dashboard {
+    max-width: 1200px;
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Header */
+.dashboard-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.dashboard-header h1 {
+    font-size: 3em;
+    color: #0ff;
+    text-shadow: 0 0 15px #0ff, 0 0 30px #0ff, 0 0 60px #0ff;
+}
+
+.dashboard-header p {
+    color: #0f0;
+    font-size: 1.2em;
+    text-shadow: 0 0 5px #0f0;
+}
+
+/* Contenedor principal: todo centrado */
+.dashboard-main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+/* Cards grid */
+.cards-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+/* Cards generales */
+.card {
+    background: linear-gradient(135deg, #111, #222);
+    border-radius: 15px;
+    padding: 20px;
+    width: 220px;
+    box-shadow: 0 0 20px #0ff, 0 0 40px #0ff inset;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 0 35px #0ff, 0 0 50px #0ff inset;
+}
+
+/* Bot status */
+.status.online {
+    color: #0f0;
+    font-weight: bold;
+    text-shadow: 0 0 10px #0f0, 0 0 20px #0f0;
+}
+
+.status.offline {
+    color: #f00;
+    font-weight: bold;
+    text-shadow: 0 0 10px #f00, 0 0 20px #f00;
+}
+
+/* Bot cards colores distintos */
+.bot-card {
+    border: 2px solid #0ff;
+}
+
+.rpi-card {
+    border: 2px solid #f0f;
+}
+
+/* Botones futuristas */
+.button, .logout-btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: linear-gradient(90deg, #0ff, #0f0, #ff0);
+    color: #000;
+    font-weight: bold;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.3s;
+    box-shadow: 0 0 10px #0ff, 0 0 20px #0f0 inset;
+}
+
+.button:hover, .logout-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px #0ff, 0 0 40px #0f0 inset;
+}
+
+/* Footer */
+.dashboard-footer {
+    text-align: center;
+    margin-top: 30px;
+}
+
+/* --- Login futurista centrado vertical y horizontalmente --- */
+.login-container {
+    background: linear-gradient(135deg, #111, #222);
+    padding: 40px 50px;
+    border-radius: 20px;
+    box-shadow: 0 0 30px #0ff, 0 0 60px #0ff inset;
+    text-align: center;
+    width: 350px;
+    margin: 0 auto;
+    transition: transform 0.3s, box-shadow 0.3s;
+
+    /* Centro vertical absoluto */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.login-container:hover {
+    box-shadow: 0 0 50px #0ff, 0 0 80px #0ff inset;
+}
+
+.login-container h1 {
+    font-size: 2.5em;
+    color: #0ff;
+    text-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+    margin-bottom: 20px;
+}
+
+input {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin: 12px 0;
+    border-radius: 10px;
+    border: 1px solid #0ff;
+    background-color: #111;
+    color: #0ff;
+    font-size: 1em;
+    outline: none;
+    transition: border 0.3s, box-shadow 0.3s;
+}
+
+input:focus {
+    border: 2px solid #0f0;
+    box-shadow: 0 0 10px #0ff, 0 0 20px #0f0 inset;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    background: linear-gradient(90deg, #0ff, #0f0, #ff0);
+    color: #000;
+    font-weight: bold;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: all 0.3s;
+    box-shadow: 0 0 10px #0ff, 0 0 20px #0f0 inset;
+}
+
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px #0ff, 0 0 40px #0f0 inset;
+}
+
+.error {
+    color: #f00;
+    font-weight: bold;
+    margin-top: 12px;
+    text-shadow: 0 0 5px #f00, 0 0 10px #f00;
+}

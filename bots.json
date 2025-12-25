@@ -1,0 +1,12 @@
+[
+    {
+        "name": "PYTHYKON BOT",
+        "bot_file": "pythykon.py",
+        "status": "offline"
+    },
+    {
+        "name": "BRAWNIVERSE BOT",
+        "bot_file": "brawniverse.py",
+        "status": "offline"
+    }
+]
