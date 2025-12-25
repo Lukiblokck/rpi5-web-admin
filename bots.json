@@ -1,12 +1,38 @@
 [
     {
-        "name": "PYTHYKON BOT",
-        "bot_file": "pythykon.py",
-        "status": "offline"
+        "name": "ANIMDUDE",
+        "path": "/home/discord-pi/discord-bots/animdude",
+        "status": "offline",
+        "uptime_kuma": "http://192.168.1.148:3001/dashboard/animdude"
     },
     {
-        "name": "BRAWNIVERSE BOT",
-        "bot_file": "brawniverse.py",
-        "status": "offline"
+        "name": "HELPY",
+        "path": "/home/discord-pi/discord-bots/helpy",
+        "status": "offline",
+        "uptime_kuma": "http://192.168.1.148:3001/dashboard/helpy"
+    },
+    {
+        "name": "MXES",
+        "path": "/home/discord-pi/discord-bots/mxes",
+        "status": "offline",
+        "uptime_kuma": "http://192.168.1.148:3001/dashboard/mxes"
+    },
+    {
+        "name": "HANDUNIT",
+        "path": "/home/discord-pi/discord-bots/handunit",
+        "status": "offline",
+        "uptime_kuma": "http://192.168.1.148:3001/dashboard/handunit"
+    },
+    {
+        "name": "PHONE GUY",
+        "path": "/home/discord-pi/discord-bots/phoneguy",
+        "status": "offline",
+        "uptime_kuma": "http://192.168.1.148:3001/dashboard/phoneguy"
+    },
+    {
+        "name": "SHADOW BONNIE",
+        "path": "/home/discord-pi/discord-bots/shadowbonnie",
+        "status": "offline",
+        "uptime_kuma": "http://192.168.1.148:3001/dashboard/shadowbonnie"
     }
 ]

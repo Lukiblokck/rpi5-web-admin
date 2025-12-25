@@ -1,0 +1,7 @@
+git add .
+
+# 5. Hacer un commit con un mensaje
+git commit -m "Primer commit"
+
+# 7. Subir los archivos al repositorio (rama principal: main)
+git push -u origin main
