@@ -1,22 +1,77 @@
+/* ==========================================================================
+   RPi5 — Dashboard & Login
+   Design direction: "control room at night" — graphite surfaces, soft glass
+   panels, two restrained accents (teal for live/bot state, indigo for the
+   Raspberry Pi node). No neon glow; depth comes from layered shadows and a
+   very subtle grain instead of saturated color.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+    /* Surfaces */
+    --bg-deep: #0c0f14;
+    --bg-panel: #12161d;
+    --bg-panel-alt: #171c25;
+    --border-soft: #232a36;
+    --border-strong: #2e3644;
+
+    /* Text */
+    --text-primary: #eceef3;
+    --text-muted: #8991a3;
+    --text-faint: #5b6373;
+
+    /* Accents — used sparingly, never at full saturation */
+    --accent-teal: #5eead4;
+    --accent-teal-dim: rgba(94, 234, 212, 0.14);
+    --accent-indigo: #8b93f8;
+    --accent-indigo-dim: rgba(139, 147, 248, 0.14);
+    --accent-danger: #f0715f;
+    --accent-danger-dim: rgba(240, 113, 95, 0.14);
+
+    /* Elevation */
+    --shadow-panel: 0 1px 0 rgba(255, 255, 255, 0.03) inset,
+                     0 20px 40px -20px rgba(0, 0, 0, 0.6),
+                     0 2px 8px rgba(0, 0, 0, 0.35);
+    --shadow-panel-hover: 0 1px 0 rgba(255, 255, 255, 0.04) inset,
+                           0 26px 50px -18px rgba(0, 0, 0, 0.65),
+                           0 4px 14px rgba(0, 0, 0, 0.4);
+
+    --radius-lg: 18px;
+    --radius-md: 12px;
+}
+
 /* --- Global --- */
+* {
+    box-sizing: border-box;
+}
+
 body {
-    font-family: 'Orbitron', sans-serif;
-    background-color: #0a0a0a;
-    color: #fff;
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: var(--text-primary);
     margin: 0;
     padding: 0;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
     justify-content: center;
     align-items: center;
+
+    /* Deep graphite background with a faint radial vignette instead of a
+       flat black — this is what reads as "polished" rather than "empty". */
+    background-color: var(--bg-deep);
+    background-image:
+        radial-gradient(ellipse 900px 500px at 20% -10%, rgba(94, 234, 212, 0.06), transparent 60%),
+        radial-gradient(ellipse 800px 500px at 100% 10%, rgba(139, 147, 248, 0.06), transparent 60%),
+        radial-gradient(ellipse 1200px 800px at 50% 120%, rgba(255, 255, 255, 0.02), transparent 60%);
+    background-attachment: fixed;
 }
 
 /* Dashboard contenedor */
 .dashboard {
     max-width: 1200px;
     width: 100%;
-    padding: 20px;
+    padding: 48px 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -25,28 +80,34 @@ body {
 /* Header */
 .dashboard-header {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
 }
 
 .dashboard-header h1 {
-    font-size: 3em;
-    color: #0ff;
-    text-shadow: 0 0 15px #0ff, 0 0 30px #0ff, 0 0 60px #0ff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2.6em;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 8px;
+    color: var(--text-primary);
 }
 
 .dashboard-header p {
-    color: #0f0;
-    font-size: 1.2em;
-    text-shadow: 0 0 5px #0f0;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-muted);
+    font-size: 0.95em;
+    letter-spacing: 0.02em;
+    margin: 0;
 }
 
-/* Contenedor principal: todo centrado */
+/* Contenedor principal */
 .dashboard-main {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
-    gap: 30px;
+    align-items: flex-start;
+    gap: 28px;
+    width: 100%;
 }
 
 /* Cards grid */
@@ -54,143 +115,291 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 15px;
+    gap: 20px;
 }
 
-/* Cards generales */
+/* --- Cards --- */
 .card {
-    background: linear-gradient(135deg, #111, #222);
-    border-radius: 15px;
-    padding: 20px;
-    width: 220px;
-    box-shadow: 0 0 20px #0ff, 0 0 40px #0ff inset;
-    text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    background:
+        linear-gradient(180deg, var(--bg-panel-alt), var(--bg-panel));
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-lg);
+    padding: 24px 22px;
+    width: 230px;
+    text-align: left;
+    box-shadow: var(--shadow-panel);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    overflow: hidden;
+}
+
+/* Thin accent line at the top of every card — the signature detail.
+   Color is set per card type below, not globally. */
+.card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--border-strong);
 }
 
 .card:hover {
-    transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 0 35px #0ff, 0 0 50px #0ff inset;
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-panel-hover);
+    border-color: var(--border-strong);
 }
 
-/* Bot status */
+.card h2, .card h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.05em;
+    font-weight: 600;
+    margin: 0 0 12px;
+    color: var(--text-primary);
+}
+
+.card p {
+    font-size: 0.9em;
+    color: var(--text-muted);
+    margin: 4px 0;
+    line-height: 1.5;
+}
+
+/* Bot status — a small breathing dot instead of a glowing word */
+.status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+    font-size: 0.85em;
+    letter-spacing: 0.02em;
+}
+
+.status::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
 .status.online {
-    color: #0f0;
-    font-weight: bold;
-    text-shadow: 0 0 10px #0f0, 0 0 20px #0f0;
+    color: var(--accent-teal);
+}
+
+.status.online::before {
+    background: var(--accent-teal);
+    box-shadow: 0 0 0 0 var(--accent-teal-dim);
+    animation: pulse-online 2.2s ease-in-out infinite;
 }
 
 .status.offline {
-    color: #f00;
-    font-weight: bold;
-    text-shadow: 0 0 10px #f00, 0 0 20px #f00;
+    color: var(--accent-danger);
 }
 
-/* Bot cards colores distintos */
-.bot-card {
-    border: 2px solid #0ff;
+.status.offline::before {
+    background: var(--accent-danger);
 }
 
-.rpi-card {
-    border: 2px solid #f0f;
+@keyframes pulse-online {
+    0%   { box-shadow: 0 0 0 0 var(--accent-teal-dim); }
+    70%  { box-shadow: 0 0 0 8px rgba(94, 234, 212, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(94, 234, 212, 0); }
 }
 
-/* Botones futuristas */
+/* Bot cards — accent colors carried only on the top edge and small details */
+.bot-card::before {
+    background: linear-gradient(90deg, var(--accent-teal), transparent 85%);
+}
+
+.rpi-card::before {
+    background: linear-gradient(90deg, var(--accent-indigo), transparent 85%);
+}
+
+.rpi-card .status.online {
+    color: var(--accent-indigo);
+}
+
+.rpi-card .status.online::before {
+    background: var(--accent-indigo);
+    animation: pulse-indigo 2.2s ease-in-out infinite;
+}
+
+@keyframes pulse-indigo {
+    0%   { box-shadow: 0 0 0 0 var(--accent-indigo-dim); }
+    70%  { box-shadow: 0 0 0 8px rgba(139, 147, 248, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(139, 147, 248, 0); }
+}
+
+/* --- Buttons --- */
 .button, .logout-btn {
-    display: inline-block;
-    margin-top: 15px;
-    padding: 10px 20px;
-    background: linear-gradient(90deg, #0ff, #0f0, #ff0);
-    color: #000;
-    font-weight: bold;
-    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 16px;
+    padding: 10px 18px;
+    background: var(--bg-panel-alt);
+    border: 1px solid var(--border-strong);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.88em;
+    border-radius: var(--radius-md);
     text-decoration: none;
-    transition: all 0.3s;
-    box-shadow: 0 0 10px #0ff, 0 0 20px #0f0 inset;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 
 .button:hover, .logout-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 20px #0ff, 0 0 40px #0f0 inset;
+    background: #1c2330;
+    border-color: var(--accent-teal);
+    transform: translateY(-1px);
+}
+
+.logout-btn {
+    border-color: var(--accent-danger-dim);
+}
+
+.logout-btn:hover {
+    border-color: var(--accent-danger);
 }
 
 /* Footer */
 .dashboard-footer {
     text-align: center;
-    margin-top: 30px;
+    margin-top: 40px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8em;
+    color: var(--text-faint);
 }
 
-/* --- Login futurista centrado vertical y horizontalmente --- */
-.login-container {
-    background: linear-gradient(135deg, #111, #222);
-    padding: 40px 50px;
-    border-radius: 20px;
-    box-shadow: 0 0 30px #0ff, 0 0 60px #0ff inset;
-    text-align: center;
-    width: 350px;
-    margin: 0 auto;
-    transition: transform 0.3s, box-shadow 0.3s;
+/* ==========================================================================
+   Login
+   ========================================================================== */
 
-    /* Centro vertical absoluto */
+.login-container {
+    background: linear-gradient(180deg, var(--bg-panel-alt), var(--bg-panel));
+    border: 1px solid var(--border-soft);
+    padding: 44px 44px 40px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-panel);
+    text-align: center;
+    width: 340px;
+    margin: 0 auto;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
+.login-container::before {
+    content: "";
+    display: block;
+    width: 36px;
+    height: 3px;
+    border-radius: 2px;
+    margin: 0 auto 20px;
+    background: linear-gradient(90deg, var(--accent-teal), var(--accent-indigo));
+}
+
 .login-container:hover {
-    box-shadow: 0 0 50px #0ff, 0 0 80px #0ff inset;
+    box-shadow: var(--shadow-panel-hover);
+    border-color: var(--border-strong);
 }
 
 .login-container h1 {
-    font-size: 2.5em;
-    color: #0ff;
-    text-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
-    margin-bottom: 20px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.9em;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+    margin: 0 0 24px;
 }
 
 input {
     display: block;
     width: 100%;
-    padding: 12px;
-    margin: 12px 0;
+    padding: 12px 14px;
+    margin: 10px 0;
     border-radius: 10px;
-    border: 1px solid #0ff;
-    background-color: #111;
-    color: #0ff;
-    font-size: 1em;
+    border: 1px solid var(--border-soft);
+    background-color: var(--bg-deep);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95em;
     outline: none;
-    transition: border 0.3s, box-shadow 0.3s;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input::placeholder {
+    color: var(--text-faint);
 }
 
 input:focus {
-    border: 2px solid #0f0;
-    box-shadow: 0 0 10px #0ff, 0 0 20px #0f0 inset;
+    border-color: var(--accent-teal);
+    box-shadow: 0 0 0 3px var(--accent-teal-dim);
 }
 
 button {
     width: 100%;
     padding: 12px;
-    margin-top: 15px;
-    background: linear-gradient(90deg, #0ff, #0f0, #ff0);
-    color: #000;
-    font-weight: bold;
+    margin-top: 18px;
+    background: linear-gradient(90deg, var(--accent-teal), var(--accent-indigo));
+    color: #0c0f14;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 0.95em;
     border: none;
-    border-radius: 12px;
+    border-radius: 10px;
     cursor: pointer;
-    font-size: 1em;
-    transition: all 0.3s;
-    box-shadow: 0 0 10px #0ff, 0 0 20px #0f0 inset;
+    transition: transform 0.2s ease, filter 0.2s ease;
 }
 
 button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 25px #0ff, 0 0 40px #0f0 inset;
+    transform: translateY(-1px);
+    filter: brightness(1.08);
+}
+
+button:focus-visible,
+input:focus-visible,
+.button:focus-visible,
+.logout-btn:focus-visible {
+    outline: 2px solid var(--accent-teal);
+    outline-offset: 2px;
 }
 
 .error {
-    color: #f00;
-    font-weight: bold;
-    margin-top: 12px;
-    text-shadow: 0 0 5px #f00, 0 0 10px #f00;
+    color: var(--accent-danger);
+    font-weight: 500;
+    font-size: 0.88em;
+    margin-top: 14px;
+}
+
+/* --- Motion & mobile --- */
+@media (prefers-reduced-motion: reduce) {
+    .status.online::before,
+    .rpi-card .status.online::before {
+        animation: none;
+    }
+    .card, .button, .logout-btn, .login-container, button {
+        transition: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-container {
+        width: calc(100% - 40px);
+        padding: 32px 28px;
+    }
+    .dashboard-header h1 {
+        font-size: 2em;
+    }
+    .card {
+        width: 100%;
+        max-width: 320px;
+    }
 }
